@@ -1,0 +1,54 @@
+# Go build artifacts
+*.exe
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Go workspace files
+bin/
+
+# Dependency directories
+vendor/
+
+# IDE/editor files
+.idea/
+*.iml
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Docker
+*.env
+docker-compose.yml
+
+# CSV demo files
+*.csv
+
+# HTML demo files
+*.htm
+*.html
+
+# Ignore coverage reports
+coverage*
+
+# Ignore temporary files
+*.swp
+*.swo
+
+# Ignore backup files
+*~
+
+# Ignore test output
+_test/
+
+# Ignore by name
+azh.iml
+azh
+
