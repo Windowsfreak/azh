@@ -1,0 +1,4 @@
+DROP TABLE IF EXISTS participations;
+DROP TABLE IF EXISTS member_courses;
+DROP TABLE IF EXISTS members;
+DROP TABLE IF EXISTS courses;
