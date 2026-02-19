@@ -1,0 +1,32 @@
+Datum,E-Mail-Adresse,Vorname (TeilnehmerIn),Nachname (TeilnehmerIn),Mitgliedsnummer,Erreichbarkeit per Telefon,An welchem Training möchtest du regelmäßig teilnehmen,Kurs Id,Alter,Mitteilung,Kündigungsdatum,Status
+01.09.2023,familie.mueller@example.de,Lena,Müller,1001,0170-1234561,Parkour Kids am Montag: 16:00 - 17:30 Uhr (6-11 Jahre),11,8,,Bestätigt
+01.09.2023,familie.schmidt@example.de,Emma,Schmidt,1002,0170-1234562,Parkour Kids am Montag: 16:00 - 17:30 Uhr (6-11 Jahre),11,9,,Bestätigt
+01.09.2023,familie.bauer@example.de,Leon,Bauer,1003,0170-1234563,Parkour Kids am Montag: 16:00 - 17:30 Uhr (6-11 Jahre),11,7,,Bestätigt
+01.09.2023,familie.weber@example.de,Anna,Weber,1004,0170-1234564,Parkour Kids am Montag: 16:00 - 17:30 Uhr (6-11 Jahre),11,10,,Bestätigt
+01.09.2023,familie.meyer@example.de,Ben,Meyer,1005,0170-1234565,Parkour Kids am Montag: 16:00 - 17:30 Uhr (6-11 Jahre),11,8,,Bestätigt
+01.09.2023,familie.fischer@example.de,Sophie,Fischer,1006,0170-1234566,Parkour Teens am Montag: 17:45 - 19:15 Uhr (ab 12 Jahren),12,13,,Bestätigt
+01.09.2023,familie.wagner@example.de,Luca,Wagner,1007,0170-1234567,Parkour Teens am Montag: 17:45 - 19:15 Uhr (ab 12 Jahren),12,14,,Bestätigt
+01.09.2023,familie.schneider@example.de,Julia,Schneider,1008,0170-1234568,Parkour Teens am Montag: 17:45 - 19:15 Uhr (ab 12 Jahren),12,12,,Bestätigt
+01.09.2023,familie.koenig@example.de,Tim,König,1009,0170-1234569,Parkour Teens am Montag: 17:45 - 19:15 Uhr (ab 12 Jahren),12,15,,Bestätigt
+01.09.2023,familie.zimmermann@example.de,Marie,Zimmermann,1010,0170-1234570,Parkour Teens am Montag: 17:45 - 19:15 Uhr (ab 12 Jahren),12,13,,Bestätigt
+01.09.2023,familie.hoffmann@example.de,Finn,Hoffmann,1011,0170-1234571,Bouldern Kids am Dienstag: 17:00 - 18:30 Uhr (ab 10 Jahre),21,11,,Bestätigt
+01.09.2023,familie.braun@example.de,Clara,Braun,1012,0170-1234572,Bouldern Kids am Dienstag: 17:00 - 18:30 Uhr (ab 10 Jahre),21,10,,Bestätigt
+01.09.2023,familie.krueger@example.de,Paul,Krüger,1013,0170-1234573,Bouldern Kids am Dienstag: 17:00 - 18:30 Uhr (ab 10 Jahre),21,12,,Bestätigt
+01.09.2023,familie.frank@example.de,Hannah,Frank,1014,0170-1234574,Bouldern Kids am Dienstag: 17:00 - 18:30 Uhr (ab 10 Jahre),21,11,,Bestätigt
+01.09.2023,familie.schreiber@example.de,Tom,Schreiber,1015,0170-1234575,Bouldern Kids am Dienstag: 17:00 - 18:30 Uhr (ab 10 Jahre),21,10,,Bestätigt
+01.09.2023,familie.klein@example.de,Mia,Klein,1016,0170-1234576,Parkour Kids am Donnerstag: 17:00 - 18:30 Uhr (6-11 Jahre),41,9,,Bestätigt
+01.09.2023,familie.peters@example.de,Jonas,Peters,1017,0170-1234577,Parkour Kids am Donnerstag: 17:00 - 18:30 Uhr (6-11 Jahre),41,8,,Bestätigt
+01.09.2023,familie.moehler@example.de,Laura,Möhler,1018,0170-1234578,Parkour Kids am Donnerstag: 17:00 - 18:30 Uhr (6-11 Jahre),41,7,,Bestätigt
+01.09.2023,familie.koch@example.de,Max,Koch,1019,0170-1234579,Parkour Kids am Donnerstag: 17:00 - 18:30 Uhr (6-11 Jahre),41,10,,Bestätigt
+01.09.2023,familie.huber@example.de,Lina,Huber,1020,0170-1234580,Parkour Kids am Donnerstag: 17:00 - 18:30 Uhr (6-11 Jahre),41,9,,Bestätigt
+01.09.2023,familie.berger@example.de,Anton,Berger,1021,0170-1234581,Parkour Kids am Montag: 16:00 - 17:30 Uhr (6-11 Jahre),11,8,,Bestätigt
+01.09.2023,familie.richter@example.de,Ella,Richter,1022,0170-1234582,Parkour Kids am Montag: 16:00 - 17:30 Uhr (6-11 Jahre),11,7,,Bestätigt
+01.09.2023,familie.lehmann@example.de,Niklas,Lehmann,1023,0170-1234583,Parkour Teens am Montag: 17:45 - 19:15 Uhr (ab 12 Jahren),12,14,,Bestätigt
+01.09.2023,familie.wolf@example.de,Sara,Wolf,1024,0170-1234584,Bouldern Kids am Dienstag: 17:00 - 18:30 Uhr (ab 10 Jahre),21,11,,Bestätigt
+01.09.2023,familie.hartmann@example.de,David,Hartmann,1025,0170-1234585,Parkour Kids am Donnerstag: 17:00 - 18:30 Uhr (6-11 Jahre),41,8,,Bestätigt
+01.09.2023,familie.kaiser@example.de,Lea,Kaiser,1026,0170-1234586,Parkour Kids am Montag: 16:00 - 17:30 Uhr (6-11 Jahre),11,9,,Bestätigt
+01.09.2023,familie.kaiser@example.de,Lea,Kaiser,1026,0170-1234586,Parkour Kids am Donnerstag: 17:00 - 18:30 Uhr (6-11 Jahre),41,9,,Bestätigt
+01.09.2023,familie.vogel@example.de,Moritz,Vogel,1027,0170-1234587,Bouldern Kids am Dienstag: 17:00 - 18:30 Uhr (ab 10 Jahre),21,10,,Bestätigt
+01.09.2023,familie.vogel@example.de,Moritz,Vogel,1027,0170-1234587,Parkour Teens am Montag: 17:45 - 19:15 Uhr (ab 12 Jahren),12,10,,Bestätigt
+01.09.2023,familie.lange@example.de,Ida,Lange,1028,0170-1234588,Parkour Kids am Donnerstag: 17:00 - 18:30 Uhr (6-11 Jahre),41,7,,Bestätigt
+01.09.2023,familie.lange@example.de,Ida,Lange,1028,0170-1234588,Bouldern Kids am Dienstag: 17:00 - 18:30 Uhr (ab 10 Jahre),21,7,,Bestätigt

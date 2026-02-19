@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>AZH Anwesenheitsliste</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        table button {
+            min-width: 7em;
+        }
+        /* Custom styles for buttons using CSS4 P3 colors */
+        .btn-present {
+            background-color: color(display-p3 0 1 0); /* Saturated green in P3 */
+        }
+        .btn-absent {
+            background-color: color(display-p3 1 0 0); /* Saturated red in P3 */
+        }
+        .btn-present.btn-pending {
+            background-color: color(display-p3 0.8 0.2 0.2); /* Muted state for pending */
+        }
+        .btn-absent.btn-pending {
+            background-color: color(display-p3 0.2 0.8 0.2); /* Muted state for pending */
+        }
+        /* Table styling for mobile-friendliness */
+        table {
+            border-collapse: collapse;
+            margin-bottom: 1.5rem;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 0.75rem;
+            text-align: left;
+            line-height: 1.5; /* Ergonomic line height for touch targets */
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        button {
+            padding: 0.5rem 1rem;
+            min-width: 44px;
+            min-height: 44px; /* Minimum touch target size */
+            cursor: pointer;
+            color: white;
+            border: none;
+            border-radius: 0.25rem;
+        }
+        @media (max-width: 600px) {
+            th, td {
+                font-size: 0.875rem;
+                padding: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 p-4">
+<h1 class="text-2xl font-bold mb-4">AZH Anwesenheitsliste</h1>
+
+<div class="flex flex-wrap gap-2 mb-6">
+    <button id="importBtn" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">Import</button>
+    <button id="exportBtn" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">Export</button>
+    <div id="exportControls" class="flex flex-wrap gap-2 hidden">
+        <input type="date" id="minDate" class="border rounded p-2" placeholder="Start Date">
+        <input type="date" id="maxDate" class="border rounded p-2" placeholder="End Date">
+        <button id="exportOkBtn" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">OK</button>
+    </div>
+    <div id="exportSuccess" class="text-green-600 font-semibold py-2 hidden">Exportieren erfolgreich</div>
+</div>
+
+<div class="mb-6">
+    <h2 class="text-xl font-semibold mb-2">Kurse</h2>
+    <div class="overflow-x-auto">
+        <table id="coursesTable" class="bg-white rounded-lg shadow">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+<div class="mb-6">
+    <h2 class="text-xl font-semibold mb-2" id="occurrences">Termine</h2>
+    <div class="overflow-x-auto">
+        <table id="occurrencesTable" class="bg-white rounded-lg shadow">
+            <thead>
+            <tr>
+                <th>Datum</th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+<div>
+    <h2 class="text-xl font-semibold mb-2" id="participants">Teilnehmer</h2>
+    <div class="overflow-x-auto">
+        <table id="participantsTable" class="bg-white rounded-lg shadow">
+            <thead>
+            <tr>
+                <th>Status</th>
+                <th>Vorname</th>
+                <th>Nachname</th>
+                <th>Telefon</th>
+                <th>Anmerkung</th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+<input type="file" id="fileInput" accept=".csv" multiple style="display: none;">
+
+<script>
+    // Base URL for API endpoints (adjust if backend is on a different host/port)
+    const API_BASE_URL = 'http://localhost:8080/api';
+
+    // Fetch and display all courses
+    async function fetchCourses() {
+        try {
+            const response = await fetch(`${API_BASE_URL}/courses`);
+            if (!response.ok) throw new Error('Failed to fetch courses');
+            const courses = await response.json();
+            const tbody = document.querySelector('#coursesTable tbody');
+            tbody.innerHTML = courses.map(course => `
+                    <tr class="cursor-pointer hover:bg-gray-100" onclick="fetchOccurrences('${course.id}', '${course.name}')">
+                        <td>${course.id}</td>
+                        <td>${course.name}</td>
+                    </tr>
+                `).join('');
+        } catch (error) {
+            console.error(error);
+            alert('Error loading courses');
+        }
+    }
+
+    // Fetch and display occurrences for a selected course
+    async function fetchOccurrences(courseId, courseName) {
+        try {
+            const response = await fetch(`${API_BASE_URL}/courses/${courseId}/occurrences`);
+            if (!response.ok) throw new Error('Failed to fetch occurrences');
+            const dates = await response.json();
+            document.getElementById('occurrences').innerText = `Termine für ${courseName}`;
+            const tbody = document.querySelector('#occurrencesTable tbody');
+            tbody.innerHTML = dates.map(date => `
+                    <tr class="cursor-pointer hover:bg-gray-100" onclick="fetchParticipants('${courseId}', '${date}')">
+                        <td>${date}</td>
+                    </tr>
+                `).join('');
+            // Clear participants table when selecting a new course
+            document.querySelector('#participantsTable tbody').innerHTML = '';
+        } catch (error) {
+            console.error(error);
+            alert('Error loading occurrences');
+        }
+    }
+
+    // Fetch and display participants for a selected course and date
+    async function fetchParticipants(courseId, date) {
+        try {
+            const response = await fetch(`${API_BASE_URL}/courses/${courseId}/dates/${date}/participants`);
+            if (!response.ok) throw new Error('Failed to fetch participants');
+            const participants = await response.json();
+            document.getElementById('participants').innerText = `Teilnehmer am ${date}`;
+            const tbody = document.querySelector('#participantsTable tbody');
+            tbody.innerHTML = participants.map(p => `
+                    <tr>
+                        <td>
+                            <button class="${p.present ? 'btn-present' : 'btn-absent'}"
+                                    onclick="toggleAttendance('${courseId}', '${date}', '${p.id}', this)">${p.present ? 'Anwesend' : 'Fehlt'}</button>
+                        </td>
+                        <td>${p.first_name}</td>
+                        <td>${p.last_name}</td>
+                        <td>${p.phone || '-'}</td>
+                        <td>${p.notes || '-'}</td>
+                    </tr>
+                `).join('');
+        } catch (error) {
+            console.error(error);
+            alert('Error loading participants');
+        }
+    }
+
+    // Toggle attendance for a participant
+    async function toggleAttendance(courseId, date, participantId, button) {
+        try {
+            button.classList.add('btn-pending');
+            button.disabled = true;
+            const response = await fetch(`${API_BASE_URL}/courses/${courseId}/dates/${date}/participants/${participantId}/attendance`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ present: (button.textContent !== 'Anwesend') })
+            });
+            if (!response.ok) throw new Error('Failed to update attendance');
+            const result = await response.json();
+            if (result.present) {
+                button.className = 'btn-present';
+                button.textContent = 'Anwesend';
+            } else {
+                button.className = 'btn-absent';
+                button.textContent = 'Fehlt';
+            }
+        } catch (error) {
+            console.error(error);
+            alert('Error updating attendance');
+        } finally {
+            button.classList.remove('btn-pending');
+            button.disabled = false;
+        }
+    }
+
+    // Import functionality: Trigger file input on button click
+    document.getElementById('importBtn').addEventListener('click', () => {
+        document.getElementById('fileInput').click();
+    });
+
+    // Handle file selection and upload for import
+    document.getElementById('fileInput').addEventListener('change', async (event) => {
+        const files = event.target.files;
+        if (files.length === 0) return;
+
+        const formData = new FormData();
+        for (const file of files) {
+            formData.append('files', file);
+        }
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/import`, {
+                method: 'POST',
+                body: formData
+            });
+            if (!response.ok) throw new Error('Failed to import files');
+            const result = await response.json();
+            alert(result.message);
+            // Reload the page on successful import
+            window.location.reload();
+        } catch (error) {
+            console.error(error);
+            alert('Error importing files');
+        } finally {
+            // Clear the file input
+            event.target.value = '';
+        }
+    });
+
+    // Export functionality: Show date inputs on button click
+    document.getElementById('exportBtn').addEventListener('click', () => {
+        document.getElementById('exportControls').classList.remove('hidden');
+        document.getElementById('exportSuccess').classList.add('hidden');
+    });
+
+    // Handle export request on OK button click
+    document.getElementById('exportOkBtn').addEventListener('click', async () => {
+        const minDate = document.getElementById('minDate').value;
+        const maxDate = document.getElementById('maxDate').value;
+
+        if (!minDate || !maxDate) {
+            alert('Please select both start and end dates');
+            return;
+        }
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/export?minDate=${minDate}&maxDate=${maxDate}`, {
+                method: 'GET'
+            });
+            if (!response.ok) throw new Error('Failed to export data');
+
+            // Get the filename from Content-Disposition header if available
+            const disposition = response.headers.get('Content-Disposition');
+            let filename = 'participations.csv';
+            if (disposition && disposition.includes('filename=')) {
+                filename = disposition.split('filename=')[1].split(';')[0].trim();
+            }
+
+            // Create a blob from the response and trigger download
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            window.URL.revokeObjectURL(url);
+
+            // Show success message and hide controls
+            document.getElementById('exportControls').classList.add('hidden');
+            document.getElementById('exportSuccess').classList.remove('hidden');
+        } catch (error) {
+            console.error(error);
+            alert('Error exporting data');
+        }
+    });
+
+    // Initialize the app by fetching courses on load
+    window.onload = fetchCourses;
+</script>
+</body>
+</html>

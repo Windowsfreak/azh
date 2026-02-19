@@ -28,12 +28,16 @@ Thumbs.db
 *.env
 docker-compose.yml
 
-# CSV demo files
-*.csv
-
 # HTML demo files
 *.htm
 *.html
+
+# CSV demo files
+*.csv
+!demomitglieder.csv
+!demotrainings.csv
+!demoupload.htm
+!index.html
 
 # Ignore coverage reports
 coverage*
